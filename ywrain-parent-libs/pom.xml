@@ -36,38 +36,6 @@
 
     </dependencies>
 
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <id>public</id>
-            <name>Public Repositories Group</name>
-            <url>http://maven.qljy.com:8081/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>public</id>
-            <name>Public Repositories</name>
-            <url>http://maven.qljy.com:8081/nexus/content/groups/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-    <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <name>Local Nexus Repository</name>
-            <url>http://maven.qljy.com:8081/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>Local Nexus Repository</name>
-            <url>http://maven.qljy.com:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
