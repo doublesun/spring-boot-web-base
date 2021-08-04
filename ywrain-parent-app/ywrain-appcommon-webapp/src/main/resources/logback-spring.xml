@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<!-- include base.xml 后无法自定义root,所以把base.xml的内容复制到这里,然后改写root -->
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<property resource="application.properties" />
+	<!-- <springProfile name="dev,test">
+		<property name="default-logstash-host" value="logstash-test01-gz.lc" />
+		<property name="default-logstash-port" value="5045" />
+		<property resource="application-test.properties" />
+	</springProfile>
+	<springProfile name="release">
+		<property name="default-logstash-host" value="logstash-release01-gz.lc" />
+		<property name="default-logstash-port" value="5045" />
+		<property resource="application-release.properties" />
+	</springProfile>
+	<springProfile name="prod">
+		<property name="default-logstash-host" value="s0.logstash.tc" />
+		<property name="default-logstash-port" value="5045" />
+		<property resource="application-prod.properties" />
+	</springProfile> -->
+
+
+	<property name="LOG_PATH" value="${logging.path:-log/}" />
+	<property name="LOG_FILE"
+		value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}" />
+
+	<property name="LOG_PATTERN_CONSOLE"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %clr(${PID:- }){magenta} [%t] %clr(%logger{39}) : %msg%n" />
+	<property name="LOG_PATTERN_FILE"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${PID:-5} [%t] %logger{39} : %msg%n" />
+
+	<appender name="CONSOLELOG" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${LOG_PATTERN_CONSOLE}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILELOG"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}</fileNamePattern>
+			<maxHistory>3</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${LOG_PATTERN_FILE}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ERRORLOG"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}error.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>3</maxHistory>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<encoder>
+			<pattern>${LOG_PATTERN_FILE}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="STASH"
+		class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<remoteHost>${logstash.host:-${default-logstash-host}}</remoteHost>
+		<port>${logstash.port:-${default-logstash-port}}</port>
+		<!-- encoder is required -->
+		<encoder charset="UTF-8"
+			class="net.logstash.logback.encoder.LogstashEncoder">
+			<customFields>{"app_name":"log.syslog.${spring.application.name}"}
+			</customFields>
+		</encoder>
+	</appender>
+
+	<root level="WARN">
+		<appender-ref ref="CONSOLELOG" />
+		<appender-ref ref="FILELOG" />
+	</root>
+	<springProfile name="dev,test">
+		<logger name="com.ywrain" level="DEBUG" additivity="false">
+			<appender-ref ref="CONSOLELOG" />
+			<appender-ref ref="FILELOG" />
+		</logger>
+	</springProfile>
+	<!-- 指定包的日志级别处理，同时向上级传递 -->
+	<logger name="com.ywrain" level="INFO">
+		<!-- INFO日志输出到logstash，ERROR日志输出到所有appender -->
+		<appender-ref ref="ERRORLOG" />
+		<appender-ref ref="STASH" />
+	</logger>
+	<logger name="org.hibernate.SQL" level="WARN">
+		<appender-ref ref="ERRORLOG" />
+		<appender-ref ref="STASH" />
+	</logger>
+
+</configuration>

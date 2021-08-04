@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ywrain</groupId>
+        <artifactId>ywrain-parent-app</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>ywrain-appcommon-redis</artifactId>
+    <description>RedisCache-缓存配置库</description>
+    <version>1.0.0</version>
+
+    <properties>
+        <protostuff.version>1.5.9</protostuff.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>${protostuff.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+            <version>${protostuff.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ywrain</groupId>
+            <artifactId>ywrain-lib-common</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--<dependency> -->
+        <!--<groupId>org.springframework.boot</groupId> -->
+        <!--<artifactId>spring-boot-starter-data-cache</artifactId> -->
+        <!--</dependency> -->
+        <dependency>
+            <groupId>biz.paluch.redis</groupId>
+            <artifactId>lettuce</artifactId>
+            <version>4.5.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

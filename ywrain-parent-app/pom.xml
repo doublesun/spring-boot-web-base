@@ -1,0 +1,105 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.ywrain</groupId>
+    <artifactId>ywrain-parent-app</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.19.RELEASE</version>
+        <relativePath />
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <encoding>UTF-8</encoding>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.compilerVersion>${java.version}</maven.compiler.compilerVersion>
+
+        <ywrain-lib-common.version>1.0.0</ywrain-lib-common.version>
+        <ywrain-appcommon-webapp.version>1.0.0</ywrain-appcommon-webapp.version>
+        <ywrain-appcommon-redis.version>1.0.0</ywrain-appcommon-redis.version>
+        <!-- <ywrain-appcommon-configclient.version>1.0.0</ywrain-appcommon-configclient.version> -->
+        <ywrain-appcommon-proto.version>1.0.0</ywrain-appcommon-proto.version>
+    </properties>
+
+
+    <dependencies>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.ywrain</groupId>
+                <artifactId>ywrain-lib-common</artifactId>
+                <version>${ywrain-lib-common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ywrain</groupId>
+                <artifactId>ywrain-appcommon-proto</artifactId>
+                <version>${ywrain-appcommon-proto.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ywrain</groupId>
+                <artifactId>ywrain-appcommon-webapp</artifactId>
+                <version>${ywrain-appcommon-webapp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ywrain</groupId>
+                <artifactId>ywrain-appcommon-redis</artifactId>
+                <version>${ywrain-appcommon-redis.version}</version>
+            </dependency>
+            <!-- <dependency>
+                <groupId>com.ywrain</groupId>
+                <artifactId>ywrain-appcommon-configclient</artifactId>
+                <version>${ywrain-appcommon-configclient.version}</version>
+            </dependency> -->
+        </dependencies>
+    </dependencyManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <url>http://maven.repos.suv163.com/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://maven.repos.suv163.com/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <defaultGoal>clean install</defaultGoal>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.yml</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+        </plugins>
+    </build>
+    <modules>
+        <module>ywrain-appcommon-proto</module>
+        <module>ywrain-appcommon-webapp</module>
+        <module>ywrain-appcommon-redis</module>
+    </modules>
+</project>
