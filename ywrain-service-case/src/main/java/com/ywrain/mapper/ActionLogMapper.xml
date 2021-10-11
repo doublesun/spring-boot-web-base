@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywrain.mapper.ActionLogMapper">
+  <resultMap id="BaseResultMap" type="com.ywrain.entity.ActionLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="schoolId" jdbcType="BIGINT" property="schoolId" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="st" jdbcType="TIMESTAMP" property="st" />
+    <result column="et" jdbcType="TIMESTAMP" property="et" />
+    <result column="clientType" jdbcType="INTEGER" property="clientType" />
+    <result column="clientIp" jdbcType="VARCHAR" property="clientIp" />
+    <result column="cver" jdbcType="BIGINT" property="cver" />
+    <result column="pageCode" jdbcType="VARCHAR" property="pageCode" />
+    <result column="view" jdbcType="VARCHAR" property="view" />
+    <result column="eventId" jdbcType="VARCHAR" property="eventId" />
+    <result column="eventType" jdbcType="INTEGER" property="eventType" />
+    <result column="args" jdbcType="VARCHAR" property="args" />
+    <result column="del" jdbcType="INTEGER" property="del" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, schoolId, uid, st, et, clientType, clientIp, cver, pageCode, view, eventId, eventType, 
+    args, del, createTime, updateTime
+  </sql>
+  <select id="selectByExample" parameterType="com.ywrain.entity.ActionLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from action_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from action_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from action_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywrain.entity.ActionLogExample">
+    delete from action_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywrain.entity.ActionLog">
+    insert into action_log (id, schoolId, uid, 
+      st, et, clientType, 
+      clientIp, cver, pageCode, 
+      view, eventId, eventType, 
+      args, del, createTime, 
+      updateTime)
+    values (#{id,jdbcType=BIGINT}, #{schoolId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, 
+      #{st,jdbcType=TIMESTAMP}, #{et,jdbcType=TIMESTAMP}, #{clientType,jdbcType=INTEGER}, 
+      #{clientIp,jdbcType=VARCHAR}, #{cver,jdbcType=BIGINT}, #{pageCode,jdbcType=VARCHAR}, 
+      #{view,jdbcType=VARCHAR}, #{eventId,jdbcType=VARCHAR}, #{eventType,jdbcType=INTEGER}, 
+      #{args,jdbcType=VARCHAR}, #{del,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywrain.entity.ActionLog">
+    insert into action_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="schoolId != null">
+        schoolId,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="st != null">
+        st,
+      </if>
+      <if test="et != null">
+        et,
+      </if>
+      <if test="clientType != null">
+        clientType,
+      </if>
+      <if test="clientIp != null">
+        clientIp,
+      </if>
+      <if test="cver != null">
+        cver,
+      </if>
+      <if test="pageCode != null">
+        pageCode,
+      </if>
+      <if test="view != null">
+        view,
+      </if>
+      <if test="eventId != null">
+        eventId,
+      </if>
+      <if test="eventType != null">
+        eventType,
+      </if>
+      <if test="args != null">
+        args,
+      </if>
+      <if test="del != null">
+        del,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="st != null">
+        #{st,jdbcType=TIMESTAMP},
+      </if>
+      <if test="et != null">
+        #{et,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clientType != null">
+        #{clientType,jdbcType=INTEGER},
+      </if>
+      <if test="clientIp != null">
+        #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="cver != null">
+        #{cver,jdbcType=BIGINT},
+      </if>
+      <if test="pageCode != null">
+        #{pageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="view != null">
+        #{view,jdbcType=VARCHAR},
+      </if>
+      <if test="eventId != null">
+        #{eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null">
+        #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="args != null">
+        #{args,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null">
+        #{del,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ywrain.entity.ActionLogExample" resultType="java.lang.Long">
+    select count(*) from action_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update action_log
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.schoolId != null">
+        schoolId = #{record.schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.st != null">
+        st = #{record.st,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.et != null">
+        et = #{record.et,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.clientType != null">
+        clientType = #{record.clientType,jdbcType=INTEGER},
+      </if>
+      <if test="record.clientIp != null">
+        clientIp = #{record.clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cver != null">
+        cver = #{record.cver,jdbcType=BIGINT},
+      </if>
+      <if test="record.pageCode != null">
+        pageCode = #{record.pageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.view != null">
+        view = #{record.view,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventId != null">
+        eventId = #{record.eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventType != null">
+        eventType = #{record.eventType,jdbcType=INTEGER},
+      </if>
+      <if test="record.args != null">
+        args = #{record.args,jdbcType=VARCHAR},
+      </if>
+      <if test="record.del != null">
+        del = #{record.del,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update action_log
+    set id = #{record.id,jdbcType=BIGINT},
+      schoolId = #{record.schoolId,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      st = #{record.st,jdbcType=TIMESTAMP},
+      et = #{record.et,jdbcType=TIMESTAMP},
+      clientType = #{record.clientType,jdbcType=INTEGER},
+      clientIp = #{record.clientIp,jdbcType=VARCHAR},
+      cver = #{record.cver,jdbcType=BIGINT},
+      pageCode = #{record.pageCode,jdbcType=VARCHAR},
+      view = #{record.view,jdbcType=VARCHAR},
+      eventId = #{record.eventId,jdbcType=VARCHAR},
+      eventType = #{record.eventType,jdbcType=INTEGER},
+      args = #{record.args,jdbcType=VARCHAR},
+      del = #{record.del,jdbcType=INTEGER},
+      createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywrain.entity.ActionLog">
+    update action_log
+    <set>
+      <if test="schoolId != null">
+        schoolId = #{schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="st != null">
+        st = #{st,jdbcType=TIMESTAMP},
+      </if>
+      <if test="et != null">
+        et = #{et,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clientType != null">
+        clientType = #{clientType,jdbcType=INTEGER},
+      </if>
+      <if test="clientIp != null">
+        clientIp = #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="cver != null">
+        cver = #{cver,jdbcType=BIGINT},
+      </if>
+      <if test="pageCode != null">
+        pageCode = #{pageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="view != null">
+        view = #{view,jdbcType=VARCHAR},
+      </if>
+      <if test="eventId != null">
+        eventId = #{eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null">
+        eventType = #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="args != null">
+        args = #{args,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null">
+        del = #{del,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywrain.entity.ActionLog">
+    update action_log
+    set schoolId = #{schoolId,jdbcType=BIGINT},
+      uid = #{uid,jdbcType=BIGINT},
+      st = #{st,jdbcType=TIMESTAMP},
+      et = #{et,jdbcType=TIMESTAMP},
+      clientType = #{clientType,jdbcType=INTEGER},
+      clientIp = #{clientIp,jdbcType=VARCHAR},
+      cver = #{cver,jdbcType=BIGINT},
+      pageCode = #{pageCode,jdbcType=VARCHAR},
+      view = #{view,jdbcType=VARCHAR},
+      eventId = #{eventId,jdbcType=VARCHAR},
+      eventType = #{eventType,jdbcType=INTEGER},
+      args = #{args,jdbcType=VARCHAR},
+      del = #{del,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.ywrain.entity.ActionLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from action_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <insert id="insertBatch">
+    insert into action_log (id, schoolId, uid, st, et, clientType, clientIp, cver, pageCode, view, eventId, eventType, args, del) values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.schoolId,jdbcType=BIGINT}, #{item.uid,jdbcType=BIGINT}, #{item.st,jdbcType=TIMESTAMP}, #{item.et,jdbcType=TIMESTAMP}, #{item.clientType,jdbcType=INTEGER}, #{item.clientIp,jdbcType=VARCHAR}, #{item.cver,jdbcType=BIGINT}, #{item.pageCode,jdbcType=VARCHAR}, #{item.view,jdbcType=VARCHAR}, #{item.eventId,jdbcType=VARCHAR}, #{item.eventType,jdbcType=INTEGER}, #{item.args,jdbcType=VARCHAR}, #{item.del,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insertBatchOrUpdate">
+    insert into action_log (id, schoolId, uid, st, et, clientType, clientIp, cver, pageCode, view, eventId, eventType, args, del) values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.schoolId,jdbcType=BIGINT}, #{item.uid,jdbcType=BIGINT}, #{item.st,jdbcType=TIMESTAMP}, #{item.et,jdbcType=TIMESTAMP}, #{item.clientType,jdbcType=INTEGER}, #{item.clientIp,jdbcType=VARCHAR}, #{item.cver,jdbcType=BIGINT}, #{item.pageCode,jdbcType=VARCHAR}, #{item.view,jdbcType=VARCHAR}, #{item.eventId,jdbcType=VARCHAR}, #{item.eventType,jdbcType=INTEGER}, #{item.args,jdbcType=VARCHAR}, #{item.del,jdbcType=INTEGER})
+    </foreach>
+     on duplicate key update id=values(id), schoolId=values(schoolId), uid=values(uid), st=values(st), et=values(et), clientType=values(clientType), clientIp=values(clientIp), cver=values(cver), pageCode=values(pageCode), view=values(view), eventId=values(eventId), eventType=values(eventType), args=values(args), del=values(del)
+  </insert>
+  <insert id="insertBatchOrUpdateExclusionColumn">
+    insert into action_log <trim prefix=" (" suffix=")" suffixOverrides=","><if test="!exclusionColumns.contains('id')">id,</if>
+      <if test="!exclusionColumns.contains('schoolId')">schoolId,</if><if test="!exclusionColumns.contains('uid')">uid,</if>
+      <if test="!exclusionColumns.contains('st')">st,</if><if test="!exclusionColumns.contains('et')">et,</if>
+      <if test="!exclusionColumns.contains('clientType')">clientType,</if><if test="!exclusionColumns.contains('clientIp')">clientIp,</if>
+      <if test="!exclusionColumns.contains('cver')">cver,</if><if test="!exclusionColumns.contains('pageCode')">pageCode,</if>
+      <if test="!exclusionColumns.contains('view')">view,</if><if test="!exclusionColumns.contains('eventId')">eventId,</if>
+      <if test="!exclusionColumns.contains('eventType')">eventType,</if><if test="!exclusionColumns.contains('args')">args,</if>
+      <if test="!exclusionColumns.contains('del')">del,</if><if test="!exclusionColumns.contains('createTime')">createTime,</if>
+      <if test="!exclusionColumns.contains('updateTime')">updateTime,</if></trim> values 
+    <foreach collection="list" index="index" item="item" separator=",">
+       <trim prefix=" (" suffix=")" suffixOverrides=","><if test="!exclusionColumns.contains('id')">#{item.id,jdbcType=BIGINT},</if>
+        <if test="!exclusionColumns.contains('schoolId')">#{item.schoolId,jdbcType=BIGINT},</if>
+        <if test="!exclusionColumns.contains('uid')">#{item.uid,jdbcType=BIGINT},</if><if test="!exclusionColumns.contains('st')">#{item.st,jdbcType=TIMESTAMP},</if>
+        <if test="!exclusionColumns.contains('et')">#{item.et,jdbcType=TIMESTAMP},</if>
+        <if test="!exclusionColumns.contains('clientType')">#{item.clientType,jdbcType=INTEGER},</if>
+        <if test="!exclusionColumns.contains('clientIp')">#{item.clientIp,jdbcType=VARCHAR},</if>
+        <if test="!exclusionColumns.contains('cver')">#{item.cver,jdbcType=BIGINT},</if>
+        <if test="!exclusionColumns.contains('pageCode')">#{item.pageCode,jdbcType=VARCHAR},</if>
+        <if test="!exclusionColumns.contains('view')">#{item.view,jdbcType=VARCHAR},</if>
+        <if test="!exclusionColumns.contains('eventId')">#{item.eventId,jdbcType=VARCHAR},</if>
+        <if test="!exclusionColumns.contains('eventType')">#{item.eventType,jdbcType=INTEGER},</if>
+        <if test="!exclusionColumns.contains('args')">#{item.args,jdbcType=VARCHAR},</if>
+        <if test="!exclusionColumns.contains('del')">#{item.del,jdbcType=INTEGER},</if>
+        <if test="!exclusionColumns.contains('createTime')">#{item.createTime,jdbcType=TIMESTAMP},</if>
+        <if test="!exclusionColumns.contains('updateTime')">#{item.updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </foreach>
+     on duplicate key update <trim suffixOverrides=","><if test="!exclusionColumns.contains('id')">id=values(id),</if>
+      <if test="!exclusionColumns.contains('schoolId')">schoolId=values(schoolId),</if>
+      <if test="!exclusionColumns.contains('uid')">uid=values(uid),</if><if test="!exclusionColumns.contains('st')">st=values(st),</if>
+      <if test="!exclusionColumns.contains('et')">et=values(et),</if><if test="!exclusionColumns.contains('clientType')">clientType=values(clientType),</if>
+      <if test="!exclusionColumns.contains('clientIp')">clientIp=values(clientIp),</if>
+      <if test="!exclusionColumns.contains('cver')">cver=values(cver),</if><if test="!exclusionColumns.contains('pageCode')">pageCode=values(pageCode),</if>
+      <if test="!exclusionColumns.contains('view')">view=values(view),</if><if test="!exclusionColumns.contains('eventId')">eventId=values(eventId),</if>
+      <if test="!exclusionColumns.contains('eventType')">eventType=values(eventType),</if>
+      <if test="!exclusionColumns.contains('args')">args=values(args),</if><if test="!exclusionColumns.contains('del')">del=values(del),</if>
+      <if test="!exclusionColumns.contains('createTime')">createTime=values(createTime),</if>
+      <if test="!exclusionColumns.contains('updateTime')">updateTime=values(updateTime),</if>
+    </trim>
+  </insert>
+  <select id="limitColumnsSelectByExample" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <foreach collection="limitColumns" item="item" separator=",">
+      ${item}
+    </foreach>
+    from action_log
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  <select id="limitColumnsSelectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <foreach collection="limitColumns" item="item" separator=",">
+      ${item}
+    </foreach>
+    from action_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <update id="limitColumnsUpdateByExample" parameterType="map">
+    update action_log
+    <set>
+      <if test="limitColumns.contains('id')">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="limitColumns.contains('schoolId')">
+        schoolId = #{record.schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="limitColumns.contains('uid')">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="limitColumns.contains('st')">
+        st = #{record.st,jdbcType=TIMESTAMP},
+      </if>
+      <if test="limitColumns.contains('et')">
+        et = #{record.et,jdbcType=TIMESTAMP},
+      </if>
+      <if test="limitColumns.contains('clientType')">
+        clientType = #{record.clientType,jdbcType=INTEGER},
+      </if>
+      <if test="limitColumns.contains('clientIp')">
+        clientIp = #{record.clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="limitColumns.contains('cver')">
+        cver = #{record.cver,jdbcType=BIGINT},
+      </if>
+      <if test="limitColumns.contains('pageCode')">
+        pageCode = #{record.pageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="limitColumns.contains('view')">
+        view = #{record.view,jdbcType=VARCHAR},
+      </if>
+      <if test="limitColumns.contains('eventId')">
+        eventId = #{record.eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="limitColumns.contains('eventType')">
+        eventType = #{record.eventType,jdbcType=INTEGER},
+      </if>
+      <if test="limitColumns.contains('args')">
+        args = #{record.args,jdbcType=VARCHAR},
+      </if>
+      <if test="limitColumns.contains('del')">
+        del = #{record.del,jdbcType=INTEGER},
+      </if>
+      <if test="limitColumns.contains('createTime')">
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="limitColumns.contains('updateTime')">
+        updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="limitColumnsUpdateByExampleSelective" parameterType="map">
+    update action_log
+    <set>
+      <if test="record.id != null and limitColumns.contains('id')">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.schoolId != null and limitColumns.contains('schoolId')">
+        schoolId = #{record.schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null and limitColumns.contains('uid')">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.st != null and limitColumns.contains('st')">
+        st = #{record.st,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.et != null and limitColumns.contains('et')">
+        et = #{record.et,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.clientType != null and limitColumns.contains('clientType')">
+        clientType = #{record.clientType,jdbcType=INTEGER},
+      </if>
+      <if test="record.clientIp != null and limitColumns.contains('clientIp')">
+        clientIp = #{record.clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cver != null and limitColumns.contains('cver')">
+        cver = #{record.cver,jdbcType=BIGINT},
+      </if>
+      <if test="record.pageCode != null and limitColumns.contains('pageCode')">
+        pageCode = #{record.pageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.view != null and limitColumns.contains('view')">
+        view = #{record.view,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventId != null and limitColumns.contains('eventId')">
+        eventId = #{record.eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventType != null and limitColumns.contains('eventType')">
+        eventType = #{record.eventType,jdbcType=INTEGER},
+      </if>
+      <if test="record.args != null and limitColumns.contains('args')">
+        args = #{record.args,jdbcType=VARCHAR},
+      </if>
+      <if test="record.del != null and limitColumns.contains('del')">
+        del = #{record.del,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null and limitColumns.contains('createTime')">
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null and limitColumns.contains('updateTime')">
+        updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="limitColumnsUpdateByPrimaryKey" parameterType="map">
+    update action_log
+    <set>
+      <if test="limitColumns.contains('id')">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="limitColumns.contains('schoolId')">
+        schoolId = #{record.schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="limitColumns.contains('uid')">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="limitColumns.contains('st')">
+        st = #{record.st,jdbcType=TIMESTAMP},
+      </if>
+      <if test="limitColumns.contains('et')">
+        et = #{record.et,jdbcType=TIMESTAMP},
+      </if>
+      <if test="limitColumns.contains('clientType')">
+        clientType = #{record.clientType,jdbcType=INTEGER},
+      </if>
+      <if test="limitColumns.contains('clientIp')">
+        clientIp = #{record.clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="limitColumns.contains('cver')">
+        cver = #{record.cver,jdbcType=BIGINT},
+      </if>
+      <if test="limitColumns.contains('pageCode')">
+        pageCode = #{record.pageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="limitColumns.contains('view')">
+        view = #{record.view,jdbcType=VARCHAR},
+      </if>
+      <if test="limitColumns.contains('eventId')">
+        eventId = #{record.eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="limitColumns.contains('eventType')">
+        eventType = #{record.eventType,jdbcType=INTEGER},
+      </if>
+      <if test="limitColumns.contains('args')">
+        args = #{record.args,jdbcType=VARCHAR},
+      </if>
+      <if test="limitColumns.contains('del')">
+        del = #{record.del,jdbcType=INTEGER},
+      </if>
+      <if test="limitColumns.contains('createTime')">
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="limitColumns.contains('updateTime')">
+        updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{record.id,jdbcType=BIGINT}
+  </update>
+  <update id="limitColumnsUpdateByPrimaryKeySelective" parameterType="map">
+    update action_log
+    <set>
+      <if test="record.id != null and limitColumns.contains('id')">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.schoolId != null and limitColumns.contains('schoolId')">
+        schoolId = #{record.schoolId,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null and limitColumns.contains('uid')">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.st != null and limitColumns.contains('st')">
+        st = #{record.st,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.et != null and limitColumns.contains('et')">
+        et = #{record.et,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.clientType != null and limitColumns.contains('clientType')">
+        clientType = #{record.clientType,jdbcType=INTEGER},
+      </if>
+      <if test="record.clientIp != null and limitColumns.contains('clientIp')">
+        clientIp = #{record.clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cver != null and limitColumns.contains('cver')">
+        cver = #{record.cver,jdbcType=BIGINT},
+      </if>
+      <if test="record.pageCode != null and limitColumns.contains('pageCode')">
+        pageCode = #{record.pageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.view != null and limitColumns.contains('view')">
+        view = #{record.view,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventId != null and limitColumns.contains('eventId')">
+        eventId = #{record.eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventType != null and limitColumns.contains('eventType')">
+        eventType = #{record.eventType,jdbcType=INTEGER},
+      </if>
+      <if test="record.args != null and limitColumns.contains('args')">
+        args = #{record.args,jdbcType=VARCHAR},
+      </if>
+      <if test="record.del != null and limitColumns.contains('del')">
+        del = #{record.del,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null and limitColumns.contains('createTime')">
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null and limitColumns.contains('updateTime')">
+        updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{record.id,jdbcType=BIGINT}
+  </update>
+</mapper>

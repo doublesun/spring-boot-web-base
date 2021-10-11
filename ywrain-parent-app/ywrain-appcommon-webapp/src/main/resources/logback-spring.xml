@@ -91,11 +91,11 @@
 	<logger name="com.ywrain" level="INFO">
 		<!-- INFO日志输出到logstash，ERROR日志输出到所有appender -->
 		<appender-ref ref="ERRORLOG" />
-		<appender-ref ref="STASH" />
+<!--		<appender-ref ref="STASH" />-->
 	</logger>
 	<logger name="org.hibernate.SQL" level="WARN">
 		<appender-ref ref="ERRORLOG" />
-		<appender-ref ref="STASH" />
+<!--		<appender-ref ref="STASH" />-->
 	</logger>
 
 </configuration>

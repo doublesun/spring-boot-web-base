@@ -3,6 +3,8 @@ package com.ywrain.controller;
 import com.google.common.collect.Maps;
 import com.ywrain.appcommon.proto.Response;
 import com.ywrain.appcommon.utils.ExceptionUtil;
+import com.ywrain.service.ActionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -75,5 +77,16 @@ public class CaseController {
     public Response testShowlogError() throws InterruptedException {
         Thread.sleep(2000);
         return Response.ok();
+    }
+
+    @Autowired
+    private ActionService actionService;
+
+    /**
+     * 事务测试
+     */
+    @RequestMapping("/tranction")
+    public void tranction() {
+        actionService.transcation();
     }
 }
