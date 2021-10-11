@@ -21,25 +21,31 @@ import com.ywrain.appcommon.converter.AppGsonHttpMessageConverter;
 @EnableAsync(proxyTargetClass=true)
 @EnableScheduling
 public class App {
-    private static Logger LOGGER = LoggerFactory.getLogger(App.class);
+
+    private final static Logger log = LoggerFactory.getLogger(App.class);
 
     /* gson替换spring boot默认的jackson */
-    @Bean
+    public final static String defaultDateFormatPattern = "yyyy-MM-dd HH:mm:ss";
+        public final static Gson gsonWithoutNull = new GsonBuilder().setDateFormat(defaultDateFormatPattern).create();
+    
+        public static void main(String[] args) {
+    
+            ConfigurableApplicationContext ctx = SpringApplication.run(App.class, args);
+    
+            String[] activeProfiles = ctx.getEnvironment().getActiveProfiles();
+            for (String profile : activeProfiles) {
+                log.info("当前使用profile为: {}", profile);
+            }
+    
+        }
+    
+        /* gson替换spring boot默认的jackson */
+        @Bean
         public HttpMessageConverters gsonHttpMessageConverters() {
             AppGsonHttpMessageConverter gsonConverter = new AppGsonHttpMessageConverter();
+            gsonConverter.setGson(gsonWithoutNull);
             return new HttpMessageConverters(gsonConverter);
         }
-
-    public static void main(String[] args) {
-        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-
-        ConfigurableApplicationContext ctx = SpringApplication.run(App.class, args);
-
-        String[] activeProfiles = ctx.getEnvironment().getActiveProfiles();
-        for (String profile : activeProfiles) {
-            LOGGER.info("当前使用profile为: {}", profile);
-        }
-    }
 }
 ```
 
